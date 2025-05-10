@@ -1,0 +1,21 @@
+# Python cache and environments
+__pycache__/
+*.py[cod]
+*.so
+env/
+venv/
+.venv/
+.env
+
+# Jupyter checkpoints
+.ipynb_checkpoints
+
+# Result and data directories
+results/
+data/
+
+# VSCode settings
+.vscode/
+
+# MacOS
+.DS_Store

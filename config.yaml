@@ -1,0 +1,22 @@
+datasets:
+  auto_mpg:
+    path: ../data/auto_mpg.csv
+    script: adar_anifis.py
+    parameters:
+      max_rules: 9
+      theta_attr: 0.1
+      pa_freq: 25
+      theta_rule: 0.1
+      pr_freq: 50
+      growth_thres: 5e-5
+
+  beijing_pm25:
+    path: ../data/beijing_pm25.csv
+    script: adar_sofenn.py
+    parameters:
+      max_rules: 7
+      theta_attr: 0.1
+      pa_freq: 25
+      theta_rule: 0.1
+      pr_freq: 50
+      growth_thres: 5e-5
