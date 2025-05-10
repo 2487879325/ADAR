@@ -2,7 +2,7 @@
 
 > A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data  
 > Ke Liu, Jing Ma (✉️ jing.ma@aut.ac.nz), Edmund M-K Lai  
-> Engineering Applications of Artificial Intelligence (EAAI), 2025
+
 
 ---
 
