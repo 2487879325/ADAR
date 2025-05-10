@@ -31,8 +31,9 @@ This repository contains the implementation of the **ADAR** (Adaptive Dynamic At
 │   ├── adar_sofenn.py      # ADAR with SOFENN implementation and CLI
 │   └── utils.py            # Data loading, evaluation metrics (RMSE, Iov, Ifsp), etc.
 │
-├── experiments/            # Experiment scripts
-│   └── run_all.py          # Reproduce all baseline comparisons
+├── experiments/            # Experiment scripts and config
+│   ├── run_all.py          # Reproduce all baseline comparisons
+│   └── config.yaml         # Experiment settings
 │
 └── notebooks/              # Jupyter notebooks for analysis and visualization
     └── analysis.ipynb      # Results visualization and ablation study
@@ -59,7 +60,7 @@ This repository contains the implementation of the **ADAR** (Adaptive Dynamic At
 
 ## Quick Start
 
-### 1. Train ADAR-ANFIS
+### Train ADAR-ANFIS
 ```bash
 python src/adar_anifis.py \
   --dataset data/auto_mpg.csv \
@@ -72,7 +73,7 @@ python src/adar_anifis.py \
   --output results/anifis_auto_mpg/
 ```
 
-### 2. Train ADAR-SOFENN
+### Train ADAR-SOFENN
 ```bash
 python src/adar_sofenn.py \
   --dataset data/beijing_pm25.csv \
@@ -85,7 +86,7 @@ python src/adar_sofenn.py \
   --output results/sofenn_pm25/
 ```
 
-### 3. Reproduce All Experiments
+### Reproduce All Experiments
 ```bash
 python experiments/run_all.py --config experiments/config.yaml
 ```
@@ -117,7 +118,7 @@ All metrics are implemented in `src/utils.py`. Experiment scripts save results (
 
 ## Citation
 
-If you use this framework in your research, please cite:
+Please cite this work as:
 
 ```bibtex
 @article{liu2025adar,
@@ -140,5 +141,3 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for d
 ## Contact
 
 **Corresponding author**: Jing Ma (✉️ jing.ma@aut.ac.nz)
-
-For questions or collaboration, feel free to open an issue or contact the author.
