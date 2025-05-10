@@ -121,12 +121,11 @@ All metrics are implemented in `src/utils.py`. Experiment scripts save results (
 Please cite this work as:
 
 ```bibtex
-@article{liu2025adar,
+@article{liu2025dynamic,
   title={A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data},
-  author={Liu, Ke and Ma, Jing and Lai, Edmund M-K},
-  journal={Engineering Applications of Artificial Intelligence},
-  year={2025},
-  doi={10.1016/j.engappai.2025.XXXXX}
+  author={Liu, Ke and Ma, Jing and Lai, Edmund MK},
+  journal={arXiv preprint arXiv:2504.19148},
+  year={2025}
 }
 ```
 
