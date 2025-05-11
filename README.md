@@ -1,18 +1,19 @@
 # ADAR: Adaptive Dynamic Attribute and Rule Management Framework
 
-> A fuzzy inference system for high-dimensional data—integrating dynamic weighting, growth, and pruning of attributes and rules
+> A fuzzy inference system for high-dimensional data—integrating dual weighting, rule growth & pruning, and attribute selection
 
 ---
 
 ## 1. Project Overview
 
-ADAR (Adaptive Dynamic Attribute and Rule) is a framework for fuzzy inference systems on high-dimensional data. By introducing attention mechanisms at both the attribute and rule levels, combined with automatic growth and pruning strategies, ADAR dynamically manages input attributes and fuzzy rules to simplify model structures, enhance prediction accuracy, and maintain interpretability.
+ADAR (Adaptive Dynamic Attribute and Rule) is a framework designed to address the challenges of high-dimensional data in neuro-fuzzy inference systems. It introduces learnable weighting mechanisms for both fuzzy rules and input attributes, combined with automated strategies for rule growth and pruning, as well as attribute pruning. This dynamic management simplifies model structures, suppresses noise, enhances prediction accuracy, and maintains interpretability.
 
 Key features:
-- **Attribute and Rule Weighting**: Assign dynamic weights to different input attributes and fuzzy rules.
-- **Automatic Growth**: Dynamically add fuzzy rules based on sensitivity thresholds.
-- **Automatic Pruning**: Remove redundant or low-contribution attributes/rules based on thresholds and frequency.
-- **Visualization & Interpretability**: Extract and present human-readable fuzzy rules.
+- **Dual Weighting Mechanism**: Differentiable weights for both fuzzy rules and input attributes, updated via backpropagation with L1 regularization.
+- **Adaptive Rule Management**: Automatic growth of new rules when validation error plateaus, and pruning of low-importance rules based on a rule-pruning threshold.
+- **Attribute Pruning**: Periodic removal of attributes whose learned importance falls below a defined threshold, reducing dimensionality and noise.
+- **Integration with ANFIS & SOFENN**: Seamless application to both static ANFIS and incremental SOFENN architectures.
+- **Scalable Performance**: Demonstrated to outperform state-of-the-art baselines in RMSE and model explainability across four benchmark datasets.
 
 ---
 
@@ -20,10 +21,10 @@ Key features:
 
 ```
 ADAR/
-├── ADAR_dataset_demo.ipynb   # Core Jupyter notebook: implementation details, experiments, and visualization
-├── config.yaml              # Sample configuration file
-├── requirements.txt         # Dependency list
-└── LICENSE                  # Open-source license (MIT)
+├── ADAR_dataset_demo.ipynb   # Core Jupyter notebook: implementation details, experiments, and visualizations
+├── config.yaml               # Sample configuration file
+├── requirements.txt          # Dependency list
+└── LICENSE                   # Open-source license (MIT)
 ```
 
 ---
@@ -54,7 +55,7 @@ ADAR/
    ```
 2. **Open and run**  
    - Open `ADAR_dataset_demo.ipynb`  
-   - Execute cells in order to observe data loading, model training, evaluation results, and visualizations.
+   - Execute cells in sequence to load data, train ADAR-ANFIS or ADAR-SOFENN, evaluate results, and view visualizations.
 
 ---
 
@@ -62,44 +63,47 @@ ADAR/
 
 | Module               | Description                                                               |
 |----------------------|---------------------------------------------------------------------------|
-| Data Loader          | Support for Boston Housing, YearPredictionMSD, Auto MPG, and more datasets|
-| Models               | Implementations of ADAR-ANFIS, ADAR-SOFENN, and various baseline models   |
-| Training             | Dynamic adjustment of attribute/rule weights, model optimization, logging |
-| Prune/Grow           | Automatic addition or removal of rules/attributes based on thresholds     |
-| Metrics              | RMSE, overlap index $I_{ov}$, fuzzy set position index $I_{fsp}$         |
-| Rule Extraction      | Export human-readable fuzzy rules                                         |
+| Data Loader          | Support for Auto MPG, Beijing PM2.5, Boston Housing, Appliances Energy    |
+| Models               | Implementations of ADAR-ANFIS, ADAR-SOFENN, and baseline fuzzy/ML models |
+| Training             | Backpropagation with dual weighting, L1 regularization, RG&P strategy     |
+| Prune/Grow           | Rule Growing & Pruning (RG&P) and Attribute Pruning (AP) mechanisms       |
+| Metrics              | RMSE, overlap index (I<sub>ov</sub>), fuzzy set position index (I<sub>fsp</sub>) |
+| Rule Extraction      | Export human-readable fuzzy IF–THEN rules                                 |
 
 ---
 
-## 6. Configuration Parameters
+## 6. Hyperparameters
 
-| Parameter              | Description                                | Example Default |
-|------------------------|--------------------------------------------|-----------------|
-| `initial_n_rules`      | Initial number of fuzzy rules              | 10              |
-| `learning_rate` (`lr`) | Learning rate for the optimizer            | 0.01            |
-| `epochs`               | Number of training epochs                  | 100             |
-| `batch_size`           | Batch size                                 | 32              |
-| `theta_attr` / `theta_rule` | Pruning thresholds for attributes/rules | 0.001           |
-| `pa_freq` / `pr_freq`  | Pruning check frequency (in epochs)        | 10              |
-| `growth_thres`         | Growth threshold for new rules             | 0.05            |
-| `lambda_attention`     | Regularization coefficient for attention   | 0.1             |
-| `lambda_diversity`     | Regularization coefficient for diversity   | 0.01            |
+| Parameter                                           | Description                                                                                  | Default                |
+|-----------------------------------------------------|----------------------------------------------------------------------------------------------|------------------------|
+| `learning_rate`                                     | Optimizer learning rate                                                                      | 0.01                   |
+| `batch_size`                                        | Batch size for training                                                                      | 512                    |
+| `epochs`                                            | Number of training epochs                                                                    | 1500                   |
+| `max_rules`                                         | Maximum number of fuzzy rules (model capacity)                                               | e.g., 3, 5, 7, 9       |
+| `attribute_pruning_threshold` (`θattr`)             | Importance weight threshold below which attributes are pruned                                 | 0.1                    |
+| `attribute_pruning_frequency` (`PA_Freq`)           | Number of epochs between attribute pruning evaluations                                        | 25                     |
+| `rule_pruning_threshold` (`θr`)                     | Importance weight threshold below which rules are pruned                                      | 0.1                    |
+| `rule_pruning_frequency` (`PR_Freq`)                | Number of epochs between rule pruning evaluations                                             | 50                     |
+| `growth_sensitivity_threshold` (`G_Thres`)          | Minimum validation error improvement required to avoid triggering rule growth                  | 5e-5                   |
 
 ---
 
 ## 7. Experimental Results & Visualization
 
-- Comparative experiments on different datasets demonstrate that ADAR significantly reduces the number of fuzzy rules while maintaining or improving prediction accuracy.
-- The notebook includes loss curves, RMSE comparison bar charts, and overlap index variation plots.
+Refer to the notebook for benchmark results on four datasets, including RMSE comparisons, rule count dynamics, overlap index and fuzzy set positioning analyses.
 
 ---
 
 ## 8. Citation
 
-If you use this framework in research or production, please cite:
+Please cite our work if you use ADAR:
 
-> Liu, K., Ma, J., & Lai, E. M.-K. (2024). A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data. *arXiv preprint arXiv:xxxx.xxxxx*.
-
+> @article{liu2025dynamic,
+  title={A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data},
+  author={Liu, Ke and Ma, Jing and Lai, Edmund MK},
+  journal={arXiv preprint arXiv:2504.19148},
+  year={2025}
+}
 ---
 
 ## 9. License
