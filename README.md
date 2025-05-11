@@ -98,12 +98,7 @@ Refer to the notebook for benchmark results on four datasets, including RMSE com
 
 Please cite our work if you use ADAR:
 
-> @article{liu2025dynamic,
-  title={A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data},
-  author={Liu, Ke and Ma, Jing and Lai, Edmund MK},
-  journal={arXiv preprint arXiv:2504.19148},
-  year={2025}
-}
+>Liu, K., Ma, J., & Lai, E. M. (2025). A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data. arXiv preprint arXiv:2504.19148.
 ---
 
 ## 9. License
