@@ -1,125 +1,114 @@
 # ADAR: Adaptive Dynamic Attribute and Rule Management Framework
 
-> A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data
-> Ke Liu, Jing Ma (✉️ jing.ma@aut.ac.nz), Edmund M-K Lai
+> A fuzzy inference system for high-dimensional data—integrating dynamic weighting, growth, and pruning of attributes and rules
 
 ---
 
-## Project Overview
+## 1. Project Overview
 
-This repository contains the Jupyter Notebook `ADAR_数据集测试.ipynb`, which implements the **ADAR** (Adaptive Dynamic Attribute and Rule) framework. This framework is designed for dynamically managing fuzzy rules and input attributes in high-dimensional datasets. By combining attribute- and rule-level weighting with automated growth and pruning strategies, ADAR simplifies model structure without sacrificing performance or interpretability. The notebook includes benchmark experiments demonstrating the framework's accuracy and ability to reduce rule complexity compared to baseline methods.
+ADAR (Adaptive Dynamic Attribute and Rule) is a framework for fuzzy inference systems on high-dimensional data. By introducing attention mechanisms at both the attribute and rule levels, combined with automatic growth and pruning strategies, ADAR dynamically manages input attributes and fuzzy rules to simplify model structures, enhance prediction accuracy, and maintain interpretability.
 
----
-
-## Repository Structure
-
-It is recommended to structure your repository as follows if you plan to share this work:
-
-.
-├── ADAR_数据集测试.ipynb       # The main Jupyter Notebook with implementations and experiments
-├── README.txt              # This file (or README.md)
-├── LICENSE                 # Your chosen license file (e.g., MIT)
-└── requirements.txt        # Python dependencies
-
-The notebook fetches datasets directly or uses pre-loaded datasets from libraries like scikit-learn.
+Key features:
+- **Attribute and Rule Weighting**: Assign dynamic weights to different input attributes and fuzzy rules.
+- **Automatic Growth**: Dynamically add fuzzy rules based on sensitivity thresholds.
+- **Automatic Pruning**: Remove redundant or low-contribution attributes/rules based on thresholds and frequency.
+- **Visualization & Interpretability**: Extract and present human-readable fuzzy rules.
 
 ---
 
-## Installation
+## 2. Repository Structure
 
-1.  **Clone the repository (if you create one):**
-    ```bash
-    git clone [https://github.com/your-username/adar-framework.git](https://github.com/your-username/adar-framework.git)
-    cd adar-framework
-    ```
-2.  **Create a virtual environment and install dependencies:**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate      # Linux/macOS
-    # venv\Scripts\activate.bat  # Windows
-    pip install -r requirements.txt
-    ```
+```
+ADAR/
+├── ADAR_dataset_demo.ipynb   # Core Jupyter notebook: implementation details, experiments, and visualization
+├── config.yaml              # Sample configuration file
+├── requirements.txt         # Dependency list
+└── LICENSE                  # Open-source license (MIT)
+```
 
 ---
 
-## How to Use the Notebook (`ADAR_数据集测试.ipynb`)
+## 3. Setup
 
-1.  **Environment:** Ensure you have a Jupyter Notebook or JupyterLab environment installed.
-2.  **Open and Run:**
-    * Open the `ADAR_数据集测试.ipynb` file in your Jupyter environment.
-    * Execute the cells sequentially.
-3.  **Content:**
-    * **Data Loading:** The notebook loads various datasets (e.g., Boston Housing, YearPredictionMSD, Auto MPG, Appliances Energy) either by fetching them from online repositories (like UCI) or using scikit-learn's dataset loaders.
-    * **Model Definitions:** It contains Python classes for ADAR-ANFIS, ADAR-SOFENN, and other baseline models (standard ANFIS, SOFENN, FuBiNFS, RVFL). These classes include the core logic for fuzzy layers, attention mechanisms, rule/attribute management (growth and pruning).
-    * **Training:** Functions like `train_attention_dynamic_attribute_and_rule_sofenn` and `train_attention_dynamic_attribute_and_rule_anfis` handle the model training process. This includes data scaling, optimization, and the dynamic adjustments of rules and attributes.
-    * **Evaluation:** After training, models are evaluated using metrics like RMSE, Average Overlap Index ($I_{ov}$), and Average Fuzzy Set Position Index ($I_{fsp}$).
-    * **Rule Extraction:** Methods are provided to extract human-readable fuzzy rules from the trained ADAR models.
-    * **Experiments:** The notebook is structured to run experiments across different datasets and model configurations, often involving multiple repeats for robustness. Results, including performance metrics and extracted rules, are typically printed in the cell outputs. Plots may also be generated to visualize training progress or results.
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/RyanLiu1999/ADAR.git
+   cd ADAR
+   ```
 
----
-
-## Key Parameters (configurable within the notebook)
-
-The behavior of the ADAR models within the notebook can be configured by changing parameters directly in the Python code, typically within the experiment setup cells or function calls. Key parameters include:
-
-* `initial_n_rules` or `n_rules`: The starting or maximum number of fuzzy rules.
-* `learning_rate` (`lr`): The learning rate for the optimizer.
-* `epochs`: The number of training epochs.
-* `batch_size`: The number of samples per training batch.
-* `prune_threshold` (for attributes and rules, e.g., `theta_attr`, `theta_rule`): Thresholds below which attributes or rules are considered for pruning.
-* `prune_frequency` (e.g., `pa_freq`, `pr_freq`): How often (in epochs) pruning checks are performed.
-* `grow_threshold` or `growth_thres`: Sensitivity threshold for triggering new rule growth.
-* `lambda_attention`, `lambda_rule_attention`, `lambda_diversity`: Regularization coefficients for attention and diversity losses.
-
-Refer to the specific function calls (e.g., `train_attention_dynamic_attribute_and_rule_sofenn`, `train_attention_dynamic_attribute_and_rule_anfis`, and other model training functions) in the notebook for how these are set.
+2. **Create a virtual environment and install dependencies**  
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate   # macOS/Linux
+   # venv\Scripts\activate  # Windows
+   pip install -r requirements.txt
+   ```
 
 ---
 
-## Evaluation Metrics
+## 4. Quick Start
 
-The notebook evaluates models using the following metrics, with calculations performed directly within the Python code:
-
-* **RMSE**: Root Mean Square Error for prediction accuracy.
-* **Iov (Overlap Index)**: Measures rule overlap. A lower value indicates better rule distinguishability.
-* **Ifsp (Fuzzy Set Position Index)**: Evaluates membership function distribution and coverage. A lower value suggests more accurate positioning.
-
-Experiment scripts and cells within the notebook will output these results, often to `results_...` subdirectories (if created by the code, e.g., `results_sofenn`, `results_anfis`) or directly in the notebook output.
-
----
-
-## `requirements.txt`
-
-Based on the imports in `ADAR_数据集测试.ipynb`, your `requirements.txt` file should include:
-
-numpy
-pandas
-torch
-scikit-learn
-matplotlib
-seaborn
-scipy
-scikit-fuzzy
-ucimlrepo
-tqdm
-
+1. **Launch Jupyter Notebook**  
+   ```bash
+   jupyter notebook
+   ```
+2. **Open and run**  
+   - Open `ADAR_dataset_demo.ipynb`  
+   - Execute cells in order to observe data loading, model training, evaluation results, and visualizations.
 
 ---
 
-## Citation
+## 5. Core Modules
 
-If you use this work, please cite the original paper:
+| Module               | Description                                                               |
+|----------------------|---------------------------------------------------------------------------|
+| Data Loader          | Support for Boston Housing, YearPredictionMSD, Auto MPG, and more datasets|
+| Models               | Implementations of ADAR-ANFIS, ADAR-SOFENN, and various baseline models   |
+| Training             | Dynamic adjustment of attribute/rule weights, model optimization, logging |
+| Prune/Grow           | Automatic addition or removal of rules/attributes based on thresholds     |
+| Metrics              | RMSE, overlap index $I_{ov}$, fuzzy set position index $I_{fsp}$         |
+| Rule Extraction      | Export human-readable fuzzy rules                                         |
 
-```bibtex
-@article{liu2024dynamic,
-  title={A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data},
-  author={Liu, Ke and Ma, Jing and Lai, Edmund M-K},
-  journal={arXiv preprint arXiv:xxxx.xxxxx}, % Please update with actual arXiv ID or publication venue
-  year={2024} % Please update with actual publication year
-}
-(The provided PDF is likely a preprint. Please update the citation with the correct arXiv ID, publication details, and year once formally published. The PDF itself does not specify an arXiv ID or a 2025 publication year for the preprint.)
+---
 
-License
-This project is licensed under the MIT License. You would need to create a LICENSE file with the MIT License text if you choose this license.
+## 6. Configuration Parameters
 
-Contact
-Corresponding author: Jing Ma (✉️ jing.ma@aut.ac.nz)
+| Parameter              | Description                                | Example Default |
+|------------------------|--------------------------------------------|-----------------|
+| `initial_n_rules`      | Initial number of fuzzy rules              | 10              |
+| `learning_rate` (`lr`) | Learning rate for the optimizer            | 0.01            |
+| `epochs`               | Number of training epochs                  | 100             |
+| `batch_size`           | Batch size                                 | 32              |
+| `theta_attr` / `theta_rule` | Pruning thresholds for attributes/rules | 0.001           |
+| `pa_freq` / `pr_freq`  | Pruning check frequency (in epochs)        | 10              |
+| `growth_thres`         | Growth threshold for new rules             | 0.05            |
+| `lambda_attention`     | Regularization coefficient for attention   | 0.1             |
+| `lambda_diversity`     | Regularization coefficient for diversity   | 0.01            |
+
+---
+
+## 7. Experimental Results & Visualization
+
+- Comparative experiments on different datasets demonstrate that ADAR significantly reduces the number of fuzzy rules while maintaining or improving prediction accuracy.
+- The notebook includes loss curves, RMSE comparison bar charts, and overlap index variation plots.
+
+---
+
+## 8. Citation
+
+If you use this framework in research or production, please cite:
+
+> Liu, K., Ma, J., & Lai, E. M.-K. (2024). A Dynamic Fuzzy Rule and Attribute Management Framework for Fuzzy Inference Systems in High-Dimensional Data. *arXiv preprint arXiv:xxxx.xxxxx*.
+
+---
+
+## 9. License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 10. Contact
+
+For questions or collaboration, please contact:  
+**Jing Ma** ✉️ jing.ma@aut.ac.nz
